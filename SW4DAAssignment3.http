@@ -1,0 +1,6 @@
+@SW4DAAssignment3_HostAddress = http://localhost:5034
+
+GET {{SW4DAAssignment3_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
