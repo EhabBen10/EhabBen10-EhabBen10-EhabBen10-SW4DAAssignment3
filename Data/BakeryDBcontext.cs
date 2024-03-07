@@ -77,5 +77,9 @@ namespace SW4DAAssignment3.Data
         public DbSet<Batch> Batches { get; set; }
         public DbSet<BatchIngredient> BatchIngredients { get; set; }
         public DbSet<BatchBackingGood> BatchBackingGoods { get; set; }
+
+        public DbSet<Supermarket> Supermarkets { get; set; }
+
+        public DbSet<OrderSupermarket> OrderSupermarkets { get; set; }
     }
 }

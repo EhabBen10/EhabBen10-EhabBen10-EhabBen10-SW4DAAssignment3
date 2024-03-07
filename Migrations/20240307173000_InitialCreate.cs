@@ -54,7 +54,7 @@ namespace SW4DAAssignment3.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Supermarket",
+                name: "Supermarkets",
                 columns: table => new
                 {
                     SupermarketId = table.Column<int>(type: "int", nullable: false)
@@ -65,7 +65,7 @@ namespace SW4DAAssignment3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Supermarket", x => x.SupermarketId);
+                    table.PrimaryKey("PK_Supermarkets", x => x.SupermarketId);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,7 +116,7 @@ namespace SW4DAAssignment3.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderSupermarket",
+                name: "OrderSupermarkets",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false),
@@ -124,17 +124,17 @@ namespace SW4DAAssignment3.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderSupermarket", x => new { x.OrderId, x.SupermarketId });
+                    table.PrimaryKey("PK_OrderSupermarkets", x => new { x.OrderId, x.SupermarketId });
                     table.ForeignKey(
-                        name: "FK_OrderSupermarket_Orders_OrderId",
+                        name: "FK_OrderSupermarkets_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderSupermarket_Supermarket_SupermarketId",
+                        name: "FK_OrderSupermarkets_Supermarkets_SupermarketId",
                         column: x => x.SupermarketId,
-                        principalTable: "Supermarket",
+                        principalTable: "Supermarkets",
                         principalColumn: "SupermarketId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -194,15 +194,15 @@ namespace SW4DAAssignment3.Migrations
                 column: "BakingGoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BatchIngredients_IngredientId",
-                table: "BatchIngredients",
-                column: "IngredientId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Batches_OrderId",
                 table: "Batches",
                 column: "OrderId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BatchIngredients_IngredientId",
+                table: "BatchIngredients",
+                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderBakingGoods_BakingGoodId",
@@ -210,8 +210,8 @@ namespace SW4DAAssignment3.Migrations
                 column: "BakingGoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderSupermarket_SupermarketId",
-                table: "OrderSupermarket",
+                name: "IX_OrderSupermarkets_SupermarketId",
+                table: "OrderSupermarkets",
                 column: "SupermarketId");
         }
 
@@ -228,7 +228,7 @@ namespace SW4DAAssignment3.Migrations
                 name: "OrderBakingGoods");
 
             migrationBuilder.DropTable(
-                name: "OrderSupermarket");
+                name: "OrderSupermarkets");
 
             migrationBuilder.DropTable(
                 name: "Batches");
@@ -240,7 +240,7 @@ namespace SW4DAAssignment3.Migrations
                 name: "BakingGoods");
 
             migrationBuilder.DropTable(
-                name: "Supermarket");
+                name: "Supermarkets");
 
             migrationBuilder.DropTable(
                 name: "Orders");

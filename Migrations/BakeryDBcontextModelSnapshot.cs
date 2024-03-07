@@ -170,7 +170,7 @@ namespace SW4DAAssignment3.Migrations
 
                     b.HasIndex("SupermarketId");
 
-                    b.ToTable("OrderSupermarket");
+                    b.ToTable("OrderSupermarkets");
                 });
 
             modelBuilder.Entity("SW4DAAssignment3.Models.Supermarket", b =>
@@ -192,7 +192,7 @@ namespace SW4DAAssignment3.Migrations
 
                     b.HasKey("SupermarketId");
 
-                    b.ToTable("Supermarket");
+                    b.ToTable("Supermarkets");
                 });
 
             modelBuilder.Entity("SW4DAAssignment3.Models.Batch", b =>
