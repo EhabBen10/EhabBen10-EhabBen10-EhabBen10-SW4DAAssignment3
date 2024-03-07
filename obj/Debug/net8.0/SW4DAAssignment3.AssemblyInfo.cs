@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SW4DAAssignment3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+889066e3b73cf34f46d10500c607c1c7f0081ca5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42029d8327e65115b92a5d6bb6580d42ef8a73a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("SW4DAAssignment3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SW4DAAssignment3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
