@@ -8,4 +8,5 @@ public class Order
     public DateTime DeliveryDate { get; set; }
     public string? ValidityPeriod { get; set; }
     public ICollection<OrderBakingGood>? OrderBakingGoods { get; set; }
+    public Batch? Batch { get; set; }
 }

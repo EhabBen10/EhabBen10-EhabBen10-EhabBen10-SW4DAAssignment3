@@ -6,5 +6,6 @@ public class BakingGood
     public string? Name { get; set; }
 
     public ICollection<OrderBakingGood>? OrderBakingGoods { get; set; }
+    public ICollection<BatchBackingGood>? BatchBackingGoods { get; set; }
 }
 
