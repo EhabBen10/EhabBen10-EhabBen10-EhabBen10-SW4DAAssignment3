@@ -19,6 +19,6 @@ public class QuantityValidatorAttribute : ValidationAttribute
             }
         }
 
-        return ValidationResult.Success;
+        return ValidationResult.Success!;
     }
 }
