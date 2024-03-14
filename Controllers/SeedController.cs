@@ -186,6 +186,7 @@ namespace SW4DAAssignment3.Controllers
             _context.SaveChanges();
 
             AddAllenrgensToIngredients();
+            seedGPScoordinates();
             return Ok();
 
         }
@@ -215,12 +216,24 @@ namespace SW4DAAssignment3.Controllers
             {
                 new IngredientAllergen { IngredientId = cake!.IngredientId, AllergenId = glutenId },
                 new IngredientAllergen { IngredientId = cake.IngredientId, AllergenId = lactoseId },
-               new IngredientAllergen { IngredientId = jam!.IngredientId, AllergenId = fructoseId },
+                new IngredientAllergen { IngredientId = jam!.IngredientId, AllergenId = fructoseId },
                 new IngredientAllergen { IngredientId = cocoa!.IngredientId, AllergenId = lactoseId },
                 new IngredientAllergen { IngredientId = rum!.IngredientId, AllergenId = fructoseId },
                 new IngredientAllergen { IngredientId = coconut!.IngredientId, AllergenId = fructoseId }
             };
             _context.IngredientAllergens.AddRange(cakeAllergens);
+            _context.SaveChanges();
+        }
+
+        private void seedGPScoordinates()
+        {
+            var supermarkets = _context.Supermarkets.ToList();
+
+            var fakta = supermarkets.First(s => s.Name == "Fakta");
+            var netto = supermarkets.First(s => s.Name == "Netto");
+
+            fakta.GPScoordinates = "56.162939 10.203921";
+            netto.GPScoordinates = "26.142929 11.203921";
             _context.SaveChanges();
         }
     }

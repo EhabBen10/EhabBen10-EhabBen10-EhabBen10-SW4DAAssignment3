@@ -126,6 +126,28 @@ namespace SW4DAAssignment3.Controllers
             return Ok(supermarketTrackId);
         }
 
+        [HttpGet("getSupermarketTrackIdWithLocation/{orderId}")]
+        public ActionResult GetSupermarketTrackIdWithLocation(int orderId)
+        {
+            var supermarketTrackId = _context.Orders
+                .Where(o => o.OrderId == orderId)
+                .SelectMany(o => o.OrderSupermarkets!)
+                .Select(s => new
+                {
+                    s.Supermarket!.track_id,
+                    s.Supermarket.offload_location,
+                    s.Supermarket.GPScoordinates
+                })
+                .ToList();
+
+            if (supermarketTrackId == null)
+            {
+                return NotFound("No supermarket found for the given order ID.");
+            }
+
+            return Ok(supermarketTrackId);
+        }
+
         [HttpGet("getTotalQuantity")]
         public ActionResult<List<object>> GetTotalQuantity([FromQuery] List<int> orderIds)
         {
