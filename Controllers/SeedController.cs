@@ -35,7 +35,7 @@ namespace SW4DAAssignment3.Controllers
                 var order = new Order
                 {
                     DeliveryPlace = "Finlandsgade 17, 8200 Aarhus N",
-                    DeliveryDate = DateTime.Parse("2024-05-03"),
+                    DeliveryDate = Convert.ToString(DateTime.Parse("2024-05-03")),
                     ValidityPeriod = "Your Validity Period"
                 };
 
@@ -124,7 +124,7 @@ namespace SW4DAAssignment3.Controllers
             var order1 = new Order
             {
                 DeliveryPlace = "Finlandsgade 17, 8200 Aarhus N",
-                DeliveryDate = DateTime.Parse("2024-05-04"),
+                DeliveryDate = Convert.ToString(DateTime.Parse("2024-05-04")),
                 ValidityPeriod = "Your Validity Period"
             };
             _context.Orders.Add(order1);
@@ -151,7 +151,7 @@ namespace SW4DAAssignment3.Controllers
             var order2 = new Order
             {
                 DeliveryPlace = "order3 17, 8200 Aarhus N",
-                DeliveryDate = DateTime.Parse("2024-05-03"),
+                DeliveryDate = Convert.ToString(DateTime.Parse("2024-05-03")),
                 ValidityPeriod = "Your Validity Period"
             };
             _context.Orders.Add(order2);
