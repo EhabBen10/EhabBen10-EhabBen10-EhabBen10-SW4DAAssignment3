@@ -84,6 +84,31 @@ namespace SW4DAAssignment3.Controllers
             return Ok(batchIngredients);
         }
 
+
+        [HttpGet("getBatchIngredientsWithAllergen/{batchId}")]
+        public ActionResult<List<BatchIngredient>> GetBatchIngredientsWithAllergen(int batchId)
+        {
+            var batchIngredients = _context.BatchIngredients
+                .Include(bi => bi.Ingredient)
+                .ThenInclude(i => i.IngredientAllergens)
+                .ThenInclude(ia => ia.Allergen)
+                .Where(bi => bi.BatchId == batchId)
+                .Select(bi => new
+                {
+                    IngredientName = bi.Ingredient.Name,
+                    Quantity = bi.Quantity,
+                    Allergens = bi.Ingredient.IngredientAllergens.Select(ia => ia.Allergen.Name).ToList()
+                })
+                .ToList();
+
+            if (!batchIngredients.Any())
+            {
+                return NotFound("No ingredients found for the given batch ID.");
+            }
+
+            return Ok(batchIngredients);
+        }
+
         [HttpGet("getSupermarketTrackId/{orderId}")]
         public ActionResult GetSupermarketTrackId(int orderId)
         {

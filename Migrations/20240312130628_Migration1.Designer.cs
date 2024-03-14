@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SW4DAAssignment3.Data;
 
@@ -11,9 +12,11 @@ using SW4DAAssignment3.Data;
 namespace SW4DAAssignment3.Migrations
 {
     [DbContext(typeof(BakeryDBcontext))]
-    partial class BakeryDBcontextModelSnapshot : ModelSnapshot
+    [Migration("20240312130628_Migration1")]
+    partial class Migration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

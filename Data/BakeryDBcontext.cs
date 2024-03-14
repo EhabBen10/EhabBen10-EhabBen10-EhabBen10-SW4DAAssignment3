@@ -69,7 +69,20 @@ namespace SW4DAAssignment3.Data
                 .WithMany(s => s.OrderSupermarkets)
                 .HasForeignKey(os => os.SupermarketId);
 
+            modelBuilder.Entity<IngredientAllergen>()
+                .HasKey(ia => new { ia.IngredientId, ia.AllergenId });
+
+            modelBuilder.Entity<IngredientAllergen>()
+                .HasOne(ia => ia.Ingredient)
+                .WithMany(i => i.IngredientAllergens)
+                .HasForeignKey(ia => ia.IngredientId);
+
+            modelBuilder.Entity<IngredientAllergen>()
+                .HasOne(ia => ia.Allergen)
+                .WithMany(a => a.IngredientAllergens)
+                .HasForeignKey(ia => ia.AllergenId);
         }
+
         public DbSet<BakingGood> BakingGoods { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -81,5 +94,8 @@ namespace SW4DAAssignment3.Data
         public DbSet<Supermarket> Supermarkets { get; set; }
 
         public DbSet<OrderSupermarket> OrderSupermarkets { get; set; }
+
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<IngredientAllergen> IngredientAllergens { get; set; }
     }
 }

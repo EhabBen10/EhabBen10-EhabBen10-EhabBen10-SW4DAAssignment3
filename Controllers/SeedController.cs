@@ -20,7 +20,7 @@ namespace SW4DAAssignment3.Controllers
         public async Task<IActionResult> Put()
         {
 
-            // Check if the ingredients already exist
+            // // Check if the ingredients already exist
             if (!_context.Ingredients.Any())
             {
                 _context.Ingredients.AddRange(
@@ -185,8 +185,43 @@ namespace SW4DAAssignment3.Controllers
             _context.Batches.Add(batch2);
             _context.SaveChanges();
 
+            AddAllenrgensToIngredients();
             return Ok();
 
+        }
+        private void AddAllenrgensToIngredients()
+        {
+            var allergens = new List<Allergen>
+            {
+                new Allergen { Name = "Gluten" },
+                new Allergen { Name = "Lactose" },
+                new Allergen { Name = "Fructose" },
+            };
+            _context.Allergens.AddRange(allergens);
+            _context.SaveChanges();
+
+            var glutenId = allergens.First(a => a.Name == "Gluten").AllergenId;
+            var lactoseId = allergens.First(a => a.Name == "Lactose").AllergenId;
+            var fructoseId = allergens.First(a => a.Name == "Fructose").AllergenId;
+
+
+            var cake = _context.Ingredients.FirstOrDefault(i => i.Name == "Leftover cake");
+            var jam = _context.Ingredients.FirstOrDefault(i => i.Name == "Raspberry jam");
+            var cocoa = _context.Ingredients.FirstOrDefault(i => i.Name == "Cocoa");
+            var rum = _context.Ingredients.FirstOrDefault(i => i.Name == "Rum");
+            var coconut = _context.Ingredients.FirstOrDefault(i => i.Name == "Coconut flakes");
+
+            var cakeAllergens = new List<IngredientAllergen>
+            {
+                new IngredientAllergen { IngredientId = cake.IngredientId, AllergenId = glutenId },
+                new IngredientAllergen { IngredientId = cake.IngredientId, AllergenId = lactoseId },
+               new IngredientAllergen { IngredientId = jam.IngredientId, AllergenId = fructoseId },
+                new IngredientAllergen { IngredientId = cocoa.IngredientId, AllergenId = lactoseId },
+                new IngredientAllergen { IngredientId = rum.IngredientId, AllergenId = fructoseId },
+                new IngredientAllergen { IngredientId = coconut.IngredientId, AllergenId = fructoseId }
+            };
+            _context.IngredientAllergens.AddRange(cakeAllergens);
+            _context.SaveChanges();
         }
     }
 }
