@@ -7,4 +7,5 @@ public class Ingredient
     [QuantityValidator(ErrorMessage = "Quantity must be a non-negative value.")]
     public int StockQuantity { get; set; }
     public ICollection<BatchIngredient>? BatchIngredients { get; set; }
+    public ICollection<IngredientAllergen>? IngredientAllergens { get; set; }
 }

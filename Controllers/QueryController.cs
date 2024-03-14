@@ -22,7 +22,7 @@ namespace SW4DAAssignment3.Controllers
             var ingredientNames = new List<string> { "sugar", "flour", "salt" };
 
             var existingIngredients = _context.Ingredients
-                .Where(i => ingredientNames.Contains(i.Name))
+                .Where(i => ingredientNames.Contains(i.Name!))
                 .ToList();
 
             if (!existingIngredients.Any())
@@ -55,7 +55,7 @@ namespace SW4DAAssignment3.Controllers
             var orderBakingGoods = _context.OrderBakingGoods
                 .Include(obg => obg.BakingGood)
                 .Where(obg => obg.OrderId == orderId)
-                .Select(obg => new { obg.BakingGood.Name, obg.Quantity })
+                .Select(obg => new { obg.BakingGood!.Name, obg.Quantity })
                 .ToList();
 
             if (!orderBakingGoods.Any())
@@ -73,10 +73,35 @@ namespace SW4DAAssignment3.Controllers
             var batchIngredients = _context.BatchIngredients
                 .Include(bi => bi.Ingredient)
                 .Where(bi => bi.BatchId == batchId)
-                .Select(bi => new { bi.Ingredient.Name, bi.Quantity })
+                .Select(bi => new { bi.Ingredient!.Name, bi.Quantity })
                 .ToList();
 
             if (!batchIngredients.Any())
+            {
+                return NotFound("No ingredients found for the given batch ID.");
+            }
+
+            return Ok(batchIngredients);
+        }
+
+
+        [HttpGet("getBatchIngredientsWithAllergen/{batchId}")]
+        public ActionResult<List<BatchIngredient>> GetBatchIngredientsWithAllergen(int batchId)
+        {
+            var batchIngredients = _context.BatchIngredients?
+                .Include(bi => bi.Ingredient)!
+                .ThenInclude(i => i!.IngredientAllergens)!
+                .ThenInclude(ia => ia.Allergen)
+                .Where(bi => bi.BatchId == batchId)
+                .Select(bi => new
+                {
+                    IngredientName = bi.Ingredient!.Name,
+                    Quantity = bi.Quantity,
+                    Allergens = bi.Ingredient.IngredientAllergens!.Select(ia => ia.Allergen!.Name).ToList()
+                })
+                .ToList();
+
+            if (!batchIngredients!.Any())
             {
                 return NotFound("No ingredients found for the given batch ID.");
             }
@@ -89,8 +114,30 @@ namespace SW4DAAssignment3.Controllers
         {
             var supermarketTrackId = _context.Orders
                 .Where(o => o.OrderId == orderId)
-                .SelectMany(o => o.OrderSupermarkets)
-                .Select(s => s.Supermarket.track_id)
+                .SelectMany(o => o.OrderSupermarkets!)
+                .Select(s => s.Supermarket!.track_id)
+                .ToList();
+
+            if (supermarketTrackId == null)
+            {
+                return NotFound("No supermarket found for the given order ID.");
+            }
+
+            return Ok(supermarketTrackId);
+        }
+
+        [HttpGet("getSupermarketTrackIdWithLocation/{orderId}")]
+        public ActionResult GetSupermarketTrackIdWithLocation(int orderId)
+        {
+            var supermarketTrackId = _context.Orders
+                .Where(o => o.OrderId == orderId)
+                .SelectMany(o => o.OrderSupermarkets!)
+                .Select(s => new
+                {
+                    s.Supermarket!.track_id,
+                    s.Supermarket.offload_location,
+                    s.Supermarket.GPScoordinates
+                })
                 .ToList();
 
             if (supermarketTrackId == null)
@@ -107,7 +154,7 @@ namespace SW4DAAssignment3.Controllers
             var totalQuantities = _context.OrderBakingGoods
                 .Include(obg => obg.BakingGood)
                 .Where(obg => orderIds.Contains(obg.OrderId))
-                .GroupBy(obg => obg.BakingGood.Name)
+                .GroupBy(obg => obg.BakingGood!.Name)
                 .Select(g => new { BakingGoodName = g.Key, TotalQuantity = g.Sum(obg => obg.Quantity) })
                 .ToList();
 
