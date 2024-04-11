@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ehabbasha/Desktop/School/6. semester/Backend/EhabBen10-EhabBen10-EhabBen10-SW4DAAssignment3/SW4DAAssignment3.csproj": {}
+    "/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/SW4DAAssignment3.csproj": {}
   },
   "projects": {
-    "/Users/ehabbasha/Desktop/School/6. semester/Backend/EhabBen10-EhabBen10-EhabBen10-SW4DAAssignment3/SW4DAAssignment3.csproj": {
+    "/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/SW4DAAssignment3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ehabbasha/Desktop/School/6. semester/Backend/EhabBen10-EhabBen10-EhabBen10-SW4DAAssignment3/SW4DAAssignment3.csproj",
+        "projectUniqueName": "/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/SW4DAAssignment3.csproj",
         "projectName": "SW4DAAssignment3",
-        "projectPath": "/Users/ehabbasha/Desktop/School/6. semester/Backend/EhabBen10-EhabBen10-EhabBen10-SW4DAAssignment3/SW4DAAssignment3.csproj",
+        "projectPath": "/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/SW4DAAssignment3.csproj",
         "packagesPath": "/Users/ehabbasha/.nuget/packages/",
-        "outputPath": "/Users/ehabbasha/Desktop/School/6. semester/Backend/EhabBen10-EhabBen10-EhabBen10-SW4DAAssignment3/obj/",
+        "outputPath": "/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ehabbasha/.nuget/NuGet/NuGet.Config"

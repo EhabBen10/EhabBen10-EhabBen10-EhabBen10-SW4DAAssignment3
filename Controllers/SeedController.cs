@@ -15,6 +15,7 @@ namespace SW4DAAssignment3.Controllers
         {
             _context = context;
         }
+
         [HttpPut(Name = "Seed")]
         [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Put()
@@ -35,7 +36,7 @@ namespace SW4DAAssignment3.Controllers
                 var order = new Order
                 {
                     DeliveryPlace = "Finlandsgade 17, 8200 Aarhus N",
-                    DeliveryDate = Convert.ToString(DateTime.Parse("2024-05-03")),
+                    DeliveryDate = DateTime.Parse("2024-05-03").ToString("ddMMyyyy HHmm"),
                     ValidityPeriod = "Your Validity Period"
                 };
 

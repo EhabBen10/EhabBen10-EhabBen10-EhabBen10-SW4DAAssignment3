@@ -37,7 +37,7 @@ public class IngredientController : ControllerBase
         _context.Ingredients.Add(ingredient);
         _context.SaveChanges();
 
-        return Ok($"Ingredient added successfully with ida {ingredient.IngredientId}");
+        return Ok($"Ingredient added successfully with id {ingredient.IngredientId}");
     }
 
     [HttpDelete(Name = "DeleteIngredient")]
