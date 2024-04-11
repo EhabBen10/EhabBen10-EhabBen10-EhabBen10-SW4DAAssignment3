@@ -1,9 +1,10 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SW4DAAssignment3.Models;
 
 namespace SW4DAAssignment3.Data
 {
-    public class BakeryDBcontext : DbContext
+    public class BakeryDBcontext : IdentityDbContext<BakeryUser>
     {
         public BakeryDBcontext(DbContextOptions<BakeryDBcontext> options) : base(options)
         {

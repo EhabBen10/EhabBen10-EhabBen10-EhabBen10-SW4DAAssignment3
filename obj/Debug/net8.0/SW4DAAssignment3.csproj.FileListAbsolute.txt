@@ -550,3 +550,10 @@
 /Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/obj/Debug/net8.0/SW4DAAssignment3.pdb
 /Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/obj/Debug/net8.0/SW4DAAssignment3.genruntimeconfig.cache
 /Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/obj/Debug/net8.0/ref/SW4DAAssignment3.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.Internal.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.Extensions.Identity.Core.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.Extensions.Identity.Stores.dll
+/Users/ehabbasha/Desktop/School/6semester/Backend/BAD_MA3_Solution_grp25/SW4DAAssignment3/bin/Debug/net8.0/Microsoft.Extensions.Options.dll
