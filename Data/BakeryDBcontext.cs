@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SW4DAAssignment3.Models;
 
 namespace SW4DAAssignment3.Data
 {
-    public class BakeryDBcontext : DbContext
+    public class BakeryDBcontext : IdentityDbContext<BakeryUser>
     {
         public BakeryDBcontext(DbContextOptions<BakeryDBcontext> options) : base(options)
         {
@@ -81,6 +83,24 @@ namespace SW4DAAssignment3.Data
                 .HasOne(ia => ia.Allergen)
                 .WithMany(a => a.IngredientAllergens)
                 .HasForeignKey(ia => ia.AllergenId);
+
+            modelBuilder.Entity<BakeryUser>().ToTable("BakeryUser");
+            modelBuilder.Entity<IdentityRole>()
+            .ToTable("ApiRoles")
+            .HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("BakeryRoleClaims");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("BakeryUserClaims");
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .ToTable("BakeryUserLogins")
+                .HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .ToTable("BakeryUserRoles")
+                .HasKey(r => new { r.UserId, r.RoleId });
+
+            modelBuilder.Entity<IdentityUserToken<string>>() // Add these lines
+                .ToTable("BakeryUserTokens")
+                .HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
         }
 
         public DbSet<BakingGood> BakingGoods { get; set; }
