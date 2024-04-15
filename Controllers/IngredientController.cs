@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SW4DAAssignment3.Data;
 using SW4DAAssignment3.Models;

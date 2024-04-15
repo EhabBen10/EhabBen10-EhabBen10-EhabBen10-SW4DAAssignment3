@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SW4DAAssignment3.Data;
@@ -17,6 +18,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getIngredients")]
+        [Authorize(Roles = "Baker, Admin, Manager")]
         public ActionResult<List<Ingredient>> GetIngredients()
         {
             var ingredientNames = new List<string> { "sugar", "flour", "salt" };
@@ -34,6 +36,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getOrder/{id}")]
+        [Authorize(Roles = "Driver, Admin, Manager")]
         public ActionResult<Order> GetOrder(int id)
         {
             var order = _context.Orders
@@ -50,6 +53,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getOrderBakingGoods/{orderId}")]
+        [Authorize(Roles = "Driver, Admin, Manager")]
         public ActionResult<List<OrderBakingGood>> GetOrderBakingGoods(int orderId)
         {
             var orderBakingGoods = _context.OrderBakingGoods
@@ -68,6 +72,7 @@ namespace SW4DAAssignment3.Controllers
 
 
         [HttpGet("getBatchIngredients/{batchId}")]
+        [Authorize(Roles = "Baker, Admin, Manager")]
         public ActionResult<List<BatchIngredient>> GetBatchIngredients(int batchId)
         {
             var batchIngredients = _context.BatchIngredients
@@ -86,6 +91,7 @@ namespace SW4DAAssignment3.Controllers
 
 
         [HttpGet("getBatchIngredientsWithAllergen/{batchId}")]
+        [Authorize(Roles = "Baker, Admin, Manager")]
         public ActionResult<List<BatchIngredient>> GetBatchIngredientsWithAllergen(int batchId)
         {
             var batchIngredients = _context.BatchIngredients?
@@ -110,6 +116,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getSupermarketTrackId/{orderId}")]
+        [Authorize(Roles = "Driver, Admin, Manager")]
         public ActionResult GetSupermarketTrackId(int orderId)
         {
             var supermarketTrackId = _context.Orders
@@ -127,6 +134,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getSupermarketTrackIdWithLocation/{orderId}")]
+        [Authorize(Roles = "Driver, Admin, Manager")]
         public ActionResult GetSupermarketTrackIdWithLocation(int orderId)
         {
             var supermarketTrackId = _context.Orders
@@ -149,6 +157,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getTotalQuantity")]
+        [Authorize(Roles = "Baker, Admin, Manager")]
         public ActionResult<List<object>> GetTotalQuantity([FromQuery] List<int> orderIds)
         {
             var totalQuantities = _context.OrderBakingGoods
@@ -167,6 +176,7 @@ namespace SW4DAAssignment3.Controllers
         }
 
         [HttpGet("getAverageFinishTimeDifference")]
+        [Authorize(Roles = "Driver, Admin, Manager")]
         public ActionResult GetAverageFinishTimeDifference()
         {
             var timeDifferences = _context.Batches
