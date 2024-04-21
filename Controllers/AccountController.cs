@@ -18,6 +18,7 @@ public class AccountController : ControllerBase
     private readonly UserManager<BakeryUser> _userManager;
     private readonly SignInManager<BakeryUser> _signInManager;
 
+    private readonly ILogger<AccountController> _logger;
     private readonly RoleManager<IdentityRole> _roleManager;
 
     public AccountController(
@@ -25,13 +26,15 @@ public class AccountController : ControllerBase
         IConfiguration configuration,
         UserManager<BakeryUser> userManager,
         SignInManager<BakeryUser> signInManager,
-        RoleManager<IdentityRole> roleManager)
+        RoleManager<IdentityRole> roleManager,
+        ILogger<AccountController> logger)
     {
         _context = context;
         _configuration = configuration;
         _userManager = userManager;
         _signInManager = signInManager;
         _roleManager = roleManager;
+        _logger = logger;
     }
 
     [HttpPost("CreateAdmin")]
@@ -60,6 +63,15 @@ public class AccountController : ControllerBase
             }
             // Add the "Admin" role to the user
             await _userManager.AddToRoleAsync(user, "Admin");
+
+            var timestamp = new DateTimeOffset(DateTime.UtcNow);
+            var loginfo = new Loginfo
+            {
+                specificUser = User.Identity?.Name,
+                Operation = "Post CreateAdmin",
+                Timestamp = timestamp.DateTime
+            };
+            _logger.LogInformation("Get called {@LogInfo} ", loginfo);
 
             return Ok("Admin user created successfully.");
         }
@@ -90,6 +102,15 @@ public class AccountController : ControllerBase
             }
             await _userManager.AddToRoleAsync(user, "Manager");
 
+            var timestamp = new DateTimeOffset(DateTime.UtcNow);
+            var loginfo = new Loginfo
+            {
+                specificUser = User.Identity?.Name,
+                Operation = "Post CreateManager",
+                Timestamp = timestamp.DateTime
+            };
+            _logger.LogInformation("Get called {@LogInfo} ", loginfo);
+
             return Ok("Manager user created successfully.");
         }
 
@@ -119,6 +140,15 @@ public class AccountController : ControllerBase
             }
             await _userManager.AddToRoleAsync(user, "Baker");
 
+            var timestamp = new DateTimeOffset(DateTime.UtcNow);
+            var loginfo = new Loginfo
+            {
+                specificUser = User.Identity?.Name,
+                Operation = "Post CreateBaker",
+                Timestamp = timestamp.DateTime
+            };
+            _logger.LogInformation("Get called {@LogInfo} ", loginfo);
+
             return Ok("Baker user created successfully.");
         }
 
@@ -147,6 +177,15 @@ public class AccountController : ControllerBase
                 }
             }
             await _userManager.AddToRoleAsync(user, "Driver");
+
+            var timestamp = new DateTimeOffset(DateTime.UtcNow);
+            var loginfo = new Loginfo
+            {
+                specificUser = User.Identity?.Name,
+                Operation = "Post CreateDriver",
+                Timestamp = timestamp.DateTime
+            };
+            _logger.LogInformation("Get called {@LogInfo} ", loginfo);
 
             return Ok("Driver user created successfully.");
         }
@@ -225,6 +264,15 @@ public class AccountController : ControllerBase
                     signingCredentials: signingCredentials);
 
                 var jwtString = new JwtSecurityTokenHandler().WriteToken(jwtObject);
+
+                var timestamp = new DateTimeOffset(DateTime.UtcNow);
+                var loginfo = new Loginfo
+                {
+                    specificUser = User.Identity?.Name,
+                    Operation = "Post Login",
+                    Timestamp = timestamp.DateTime
+                };
+                _logger.LogInformation("Get called {@LogInfo} ", loginfo);
 
                 return StatusCode(StatusCodes.Status200OK, jwtString);
             }

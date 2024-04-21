@@ -10,10 +10,11 @@ namespace SW4DAAssignment3.Controllers
     public class SeedController : ControllerBase
     {
         private readonly BakeryDBcontext _context;
-
-        public SeedController(BakeryDBcontext context)
+        private readonly ILogger<SeedController> _logger;
+        public SeedController(BakeryDBcontext context, ILogger<SeedController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpPut(Name = "Seed")]
@@ -188,6 +189,16 @@ namespace SW4DAAssignment3.Controllers
 
             AddAllenrgensToIngredients();
             seedGPScoordinates();
+
+            var timestamp = new DateTimeOffset(DateTime.UtcNow);
+            var loginfo = new Loginfo
+            {
+                specificUser = User.Identity?.Name,
+                Operation = "Delete Ingredient",
+                Timestamp = timestamp.DateTime
+            };
+            _logger.LogInformation("Get called {@LogInfo} ", loginfo);
+
             return Ok();
 
         }
