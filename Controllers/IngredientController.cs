@@ -48,7 +48,7 @@ public class IngredientController : ControllerBase
         var loginfo = new Loginfo
         {
             specificUser = User.Identity?.Name,
-            Operation = "Post Ingredient",
+            Operation = "post Ingredient",
             Timestamp = timestamp.DateTime
         };
         _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -77,7 +77,7 @@ public class IngredientController : ControllerBase
         var loginfo = new Loginfo
         {
             specificUser = User.Identity?.Name,
-            Operation = "Delete Ingredient",
+            Operation = "delete Ingredient",
             Timestamp = timestamp.DateTime
         };
         _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -112,7 +112,7 @@ public class IngredientController : ControllerBase
         var loginfo = new Loginfo
         {
             specificUser = User.Identity?.Name,
-            Operation = "Update Ingredient",
+            Operation = "update Ingredient",
             Timestamp = timestamp.DateTime
         };
         _logger.LogInformation("Get called {@LogInfo} ", loginfo);

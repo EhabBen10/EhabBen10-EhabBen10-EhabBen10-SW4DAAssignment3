@@ -17,8 +17,7 @@ public class LogService
 
     public async Task<List<Binding>> GetLogs(string specificUser, string operation)
     {
-        //Make it like it does not matter if it is upper case or lowercase and implement the operation
-        var s = _logsCollection.Find(x => x.Properties.LogInfo.specificUser == specificUser);
+        var s = _logsCollection.Find(x => x.Properties.LogInfo.specificUser == specificUser.ToLower() && x.Properties.LogInfo.Operation.Contains(operation.ToLower()));
         var count = s.CountDocumentsAsync();
         Console.WriteLine("number of documents found: " + count);
         return await s.ToListAsync();

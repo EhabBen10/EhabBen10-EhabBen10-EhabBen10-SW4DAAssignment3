@@ -13,8 +13,12 @@ public class LoggingControler : ControllerBase
     public LoggingControler(LogService logService) => _logService = logService;
 
     [HttpGet]
-    public async Task<List<Binding>> Get(string specificUser, string operation)
+    public async Task<List<Binding>> Get(string? specificUser, string operation)
     {
+        if (specificUser == "")
+        {
+            specificUser = "";
+        }
         return await _logService.GetLogs(specificUser, operation);
     }
 

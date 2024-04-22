@@ -68,7 +68,7 @@ public class AccountController : ControllerBase
             var loginfo = new Loginfo
             {
                 specificUser = User.Identity?.Name,
-                Operation = "Post CreateAdmin",
+                Operation = "post CreateAdmin",
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -106,7 +106,7 @@ public class AccountController : ControllerBase
             var loginfo = new Loginfo
             {
                 specificUser = User.Identity?.Name,
-                Operation = "Post CreateManager",
+                Operation = "post CreateManager",
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -144,7 +144,7 @@ public class AccountController : ControllerBase
             var loginfo = new Loginfo
             {
                 specificUser = User.Identity?.Name,
-                Operation = "Post CreateBaker",
+                Operation = "post CreateBaker",
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -182,7 +182,7 @@ public class AccountController : ControllerBase
             var loginfo = new Loginfo
             {
                 specificUser = User.Identity?.Name,
-                Operation = "Post CreateDriver",
+                Operation = "post CreateDriver",
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
@@ -268,8 +268,8 @@ public class AccountController : ControllerBase
                 var timestamp = new DateTimeOffset(DateTime.UtcNow);
                 var loginfo = new Loginfo
                 {
-                    specificUser = User.Identity?.Name,
-                    Operation = "Post Login",
+                    specificUser = input.UserName,
+                    Operation = "post Login",
                     Timestamp = timestamp.DateTime
                 };
                 _logger.LogInformation("Get called {@LogInfo} ", loginfo);
