@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  api:
+    image: ehabbasha/assignment4
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db1
+      - db2
+    environment:
+      - SQL_CONNECTION_STRING="Server=db2-1;Database=Assignment3;User Id=SA;Password=Vym39ejx;MultipleActiveResultSets=True;TrustServerCertificate=True"
+      - MONGO_CONNECTION_STRING="mongodb://db1:27017/Ass4Log"
+      - API_URL=http://0.0.0.0:8080
+    networks:
+      - backend
+
+  db1:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    ports:
+      - "27017:27017"
+    networks:
+      - backend
+
+  db2:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Vym39ejx
+    ports:
+      - "1433:1433"
+    volumes:
+      - /Users/ehabbasha/Desktop/mssql/data:/var/opt/mssql/data
+
+    networks:
+      - backend
+
+networks:
+  backend:
+    name: assignment4

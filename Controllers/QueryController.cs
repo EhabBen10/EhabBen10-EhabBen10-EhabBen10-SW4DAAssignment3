@@ -11,7 +11,6 @@ namespace SW4DAAssignment3.Controllers
     public class QueryController : ControllerBase
     {
         private readonly BakeryDBcontext _context; // replace YourDbContext with the actual name of your DbContext
-
         public QueryController(BakeryDBcontext context) // replace YourDbContext with the actual name of your DbContext
         {
             _context = context;
