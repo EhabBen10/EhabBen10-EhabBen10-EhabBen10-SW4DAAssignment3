@@ -13,11 +13,14 @@ public class LogService
         _logsCollection = database.GetCollection<Binding>(configuration["Serilog:WriteTo:0:Args:collectionName"]);
     }
 
-    public async Task<List<Binding>> GetLogs(string specificUser, string operation)
+    public async Task<List<Binding>> GetLogs(string specificUser, string operation, DateTime dateTime)
     {
-        var s = _logsCollection.Find(x => x.Properties.LogInfo.specificUser == specificUser.ToLower() && x.Properties.LogInfo.Operation.Contains(operation.ToLower()));
+        var startOfDay = dateTime.Date;
+        var endOfDay = startOfDay.AddDays(1);
+        var s = _logsCollection.Find(x => x.Properties.LogInfo.specificUser == specificUser.ToLower()
+         && x.Properties.LogInfo.Operation.Contains(operation.ToLower()) &&
+                    x.Properties.LogInfo.Timestamp >= startOfDay && x.Properties.LogInfo.Timestamp < endOfDay);
         var count = s.CountDocumentsAsync();
-        Console.WriteLine("number of documents found: " + count);
         return await s.ToListAsync();
     }
 }

@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   api:
-    image: ehabbasha/assignment4
+    image: assignment4
     ports:
       - "8080:8080"
     depends_on:
@@ -31,8 +31,6 @@ services:
       - SA_PASSWORD=Vym39ejx
     ports:
       - "1433:1433"
-    volumes:
-      - /Users/ehabbasha/Desktop/mssql/data:/var/opt/mssql/data
 
     networks:
       - backend
