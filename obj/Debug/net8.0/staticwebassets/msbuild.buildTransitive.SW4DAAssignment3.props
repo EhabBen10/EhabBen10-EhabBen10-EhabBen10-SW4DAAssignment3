@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="../buildMultiTargeting/SW4DAAssignment3.props" />
-</Project>

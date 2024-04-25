@@ -18,7 +18,7 @@ public class LogService
         var startOfDay = dateTime.Date;
         var endOfDay = startOfDay.AddDays(1);
         var s = _logsCollection.Find(x => x.Properties.LogInfo.specificUser == specificUser.ToLower()
-         && x.Properties.LogInfo.Operation.Contains(operation.ToLower()) &&
+         && x.Properties.LogInfo.Operation!.Contains(operation.ToLower()) &&
                     x.Properties.LogInfo.Timestamp >= startOfDay && x.Properties.LogInfo.Timestamp < endOfDay);
         var count = s.CountDocumentsAsync();
         return await s.ToListAsync();
