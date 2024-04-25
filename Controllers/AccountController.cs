@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using SW4DAAssignment3.Data;
 using SW4DAAssignment3.DTO;
 using SW4DAAssignment3.Models;
+using SW4DAAssignment3.Services;
 
 namespace SW4DAAssignment3.Controllers;
 
@@ -13,57 +14,28 @@ namespace SW4DAAssignment3.Controllers;
 [ApiController]
 public class AccountController : ControllerBase
 {
-    private readonly BakeryDBcontext _context;
     private readonly IConfiguration _configuration;
-    private readonly UserManager<BakeryUser> _userManager;
-    private readonly SignInManager<BakeryUser> _signInManager;
-
     private readonly ILogger<AccountController> _logger;
-    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly AccountSeedingService _accountSeedingService;
+    private readonly UserManager<BakeryUser> _userManager;
 
     public AccountController(
-        BakeryDBcontext context,
         IConfiguration configuration,
-        UserManager<BakeryUser> userManager,
-        SignInManager<BakeryUser> signInManager,
-        RoleManager<IdentityRole> roleManager,
-        ILogger<AccountController> logger)
+        ILogger<AccountController> logger,
+        AccountSeedingService accountSeedingService,
+        UserManager<BakeryUser> userManager)
     {
-        _context = context;
         _configuration = configuration;
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _roleManager = roleManager;
         _logger = logger;
+        _accountSeedingService = accountSeedingService;
+        _userManager = userManager;
     }
 
     [HttpPost("CreateAdmin")]
-
     public async Task<IActionResult> CreateAdmin([FromBody] RegisterDTO model)
     {
-        var user = new BakeryUser
+        if (await _accountSeedingService.CreateAdmin(model))
         {
-            UserName = model.FullName,
-            Email = model.Email,
-        };
-
-        var result = _userManager.CreateAsync(user, model.Password).Result;
-
-        if (result.Succeeded)
-        {
-            // Check if the "Admin" role exists
-            if (!await _roleManager.RoleExistsAsync("Admin"))
-            {
-                // If not, create the "Admin" role
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Admin"));
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest("Failed to create admin role.");
-                }
-            }
-            // Add the "Admin" role to the user
-            await _userManager.AddToRoleAsync(user, "Admin");
-
             var timestamp = new DateTimeOffset(DateTime.UtcNow);
             var loginfo = new Loginfo
             {
@@ -72,36 +44,19 @@ public class AccountController : ControllerBase
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
-
             return Ok("Admin user created successfully.");
         }
-
-        return BadRequest("Failed to create admin user.");
+        else
+        {
+            return BadRequest("Failed to create admin user.");
+        }
     }
 
     [HttpPost("CreateManager")]
     public async Task<IActionResult> CreateManager([FromBody] RegisterDTO model)
     {
-        var user = new BakeryUser
+        if (await _accountSeedingService.CreateManager(model))
         {
-            UserName = model.FullName,
-            Email = model.Email,
-        };
-
-        var result = _userManager.CreateAsync(user, model.Password).Result;
-
-        if (result.Succeeded)
-        {
-            if (!await _roleManager.RoleExistsAsync("Manager"))
-            {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Manager"));
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest("Failed to create Manager role.");
-                }
-            }
-            await _userManager.AddToRoleAsync(user, "Manager");
-
             var timestamp = new DateTimeOffset(DateTime.UtcNow);
             var loginfo = new Loginfo
             {
@@ -110,36 +65,20 @@ public class AccountController : ControllerBase
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
-
             return Ok("Manager user created successfully.");
         }
+        else
+        {
+            return BadRequest("Failed to create Manager user.");
+        }
 
-        return BadRequest("Failed to create Manager user.");
     }
 
     [HttpPost("CreateBaker")]
     public async Task<IActionResult> CreateBaker([FromBody] RegisterDTO model)
     {
-        var user = new BakeryUser
+        if (await _accountSeedingService.CreateBaker(model))
         {
-            UserName = model.FullName,
-            Email = model.Email,
-        };
-
-        var result = _userManager.CreateAsync(user, model.Password).Result;
-
-        if (result.Succeeded)
-        {
-            if (!await _roleManager.RoleExistsAsync("Baker"))
-            {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Baker"));
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest("Failed to create Baker role.");
-                }
-            }
-            await _userManager.AddToRoleAsync(user, "Baker");
-
             var timestamp = new DateTimeOffset(DateTime.UtcNow);
             var loginfo = new Loginfo
             {
@@ -148,36 +87,19 @@ public class AccountController : ControllerBase
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
-
             return Ok("Baker user created successfully.");
         }
-
-        return BadRequest("Failed to create Baker user.");
+        else
+        {
+            return BadRequest("Failed to create Baker user.");
+        }
     }
 
     [HttpPost("CreateDriver")]
     public async Task<IActionResult> CreateDriver([FromBody] RegisterDTO model)
     {
-        var user = new BakeryUser
+        if (await _accountSeedingService.CreateDriver(model))
         {
-            UserName = model.FullName,
-            Email = model.Email,
-        };
-
-        var result = _userManager.CreateAsync(user, model.Password).Result;
-
-        if (result.Succeeded)
-        {
-            if (!await _roleManager.RoleExistsAsync("Driver"))
-            {
-                var roleResult = await _roleManager.CreateAsync(new IdentityRole("Driver"));
-                if (!roleResult.Succeeded)
-                {
-                    return BadRequest("Failed to create Driver role.");
-                }
-            }
-            await _userManager.AddToRoleAsync(user, "Driver");
-
             var timestamp = new DateTimeOffset(DateTime.UtcNow);
             var loginfo = new Loginfo
             {
@@ -186,53 +108,27 @@ public class AccountController : ControllerBase
                 Timestamp = timestamp.DateTime
             };
             _logger.LogInformation("Get called {@LogInfo} ", loginfo);
-
             return Ok("Driver user created successfully.");
         }
-
-        return BadRequest("Failed to create Driver user.");
+        else
+        {
+            return BadRequest("Failed to create Driver user.");
+        }
     }
 
     [HttpPost("SeedUsers")]
     public async Task<IActionResult> SeedUsers()
     {
-
-        var admin = new RegisterDTO
+        if (await _accountSeedingService.SeedUsers())
         {
-            FullName = "admin",
-            Email = "admin@example.com",
-            Password = "Adminpassword12?"
-        };
-        var manager = new RegisterDTO
-        {
-            FullName = "manager",
-            Email = "manager@example.com",
-            Password = "Managerpassword12?"
-        };
-        var baker = new RegisterDTO
-        {
-            FullName = "baker",
-            Email = "baker@example.com",
-            Password = "Bakerpassword12?"
-        };
-        var driver = new RegisterDTO
-        {
-            FullName = "driver",
-            Email = "driver@example.com",
-            Password = "Driverpassword12?"
-        };
-        if (await CreateAdmin(admin) != BadRequest("Failed to create admin user.") &&
-        await CreateManager(manager) != BadRequest("Failed to create Manager user.") &&
-        await CreateBaker(baker) != BadRequest("Failed to create Baker user.") &&
-        await CreateDriver(driver) != BadRequest("Failed to create Driver user."))
-        {
-            return Ok("Users created successfully.");
+            return Ok("Users seeded successfully.");
         }
-
-
-        return BadRequest("Failed to create user.");
-
+        else
+        {
+            return BadRequest("Failed to seed users.");
+        }
     }
+
     [HttpPost]
     public async Task<ActionResult> Login(LoginDTO input)
     {

@@ -35,7 +35,7 @@ namespace SW4DAAssignment3.Controllers
                 return Ok("Database seeded successfully");
             }
             else
-                return BadRequest("Can not seed the database.");
+                return BadRequest("Can not seed the database.Could be because there is already data in the database.");
 
 
         }

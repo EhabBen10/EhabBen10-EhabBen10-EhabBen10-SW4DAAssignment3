@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using SW4DAAssignment3.Data;
 using SW4DAAssignment3.DTO;
@@ -143,7 +144,10 @@ public class AccountSeedingService
 
     public async Task<bool> SeedUsers()
     {
-
+        if (await _userManager.FindByNameAsync("admin") != null)
+        {
+            return false;
+        }
         var admin = new RegisterDTO
         {
             FullName = "admin",
