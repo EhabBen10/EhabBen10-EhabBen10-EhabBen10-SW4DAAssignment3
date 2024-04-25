@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -99,6 +98,14 @@ var app = builder.Build();
 // }
 app.UseSwagger();
 app.UseSwaggerUI();
+//Creates the database if not exists
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<BakeryDBcontext>();
+    context.Database.Migrate(); //Applies pending migrations and creates the database if not exists
+    // DbInitializer.Initialize(context);
+}
 app.UseHttpsRedirection();
 
 app.MapControllers();
