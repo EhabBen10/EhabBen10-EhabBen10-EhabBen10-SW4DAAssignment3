@@ -15,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<LogService>();
+builder.Services.AddScoped<SeedService>();
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(options =>
@@ -103,8 +104,9 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<BakeryDBcontext>();
+    var seed = services.GetRequiredService<SeedService>();
     context.Database.Migrate(); //Applies pending migrations and creates the database if not exists
-    // DbInitializer.Initialize(context);
+    await seed.SeedDb();
 }
 app.UseHttpsRedirection();
 
