@@ -1,6 +1,4 @@
 using MongoDB.Driver;
-using Serilog;
-using SW4DAAssignment3.Models;
 
 namespace SW4DAAssignment3.Services;
 
